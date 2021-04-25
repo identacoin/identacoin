@@ -22,8 +22,12 @@ OBJ_DIR := obj
 OBJ_DIRS := $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%, $(wildcard ${SRC_DIR}/*/)) 
 SRC_FILES := $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard ${SRC_DIR}/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
-LDFLAGS := 
-CPPFLAGS := 
+LDFLAGS :=
+BASE_VERSION_NUM := 0.1
+VERSION := ${BASE_VERSION_NUM}.$(shell git show --oneline -s --format="%h %d")
+BUILD_DATE := $(shell date "+%Y/%m/%d %H:%M:%S")
+LDEXT := 
+CPPFLAGS := -DBUILDDATE="\"${BUILD_DATE}\"" -DVERSION="\"${VERSION}\""
 CXXFLAGS := 
 LOGS := logs
 
@@ -38,7 +42,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	g++ $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
 
 ${OUT_FILE}: $(OBJ_FILES) 
-	g++ $(LDFLAGS) -o $@ $^ ${LIBS}
+	g++ $(LDFLAGS) -o $@ $^ ${LIBS} ${LDEXT}
 
 ${OUT_FOLDER}:
 	mkdir ${OUT_FOLDER}

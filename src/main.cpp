@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     
 
     */
-    std::cout << "Instacoin alpha v0.0. " << argc << "\n";
+    std::cout << "Instacoin alpha v" << VERSION << " Built: " << BUILDDATE << "\n";
     if (argc > 1) {
 
         std::string str1 (argv[1]);
