@@ -6,12 +6,14 @@ else
     uname_S := $(shell uname -s)
 endif
 
+BASENAME=identacoin
+
 ifeq ($(uname_S), Windows)
-    OUT_FILE=${OUT_FOLDER}/main.exe
+    OUT_FILE=${OUT_FOLDER}/${BASENAME}.exe
 	LIBS := -lws2_32 -lwsock32
 endif
 ifeq ($(uname_S), Linux)
-    OUT_FILE=${OUT_FOLDER}/main
+    OUT_FILE=${OUT_FOLDER}/${BASENAME}
 	LIBS := 
 endif
 
@@ -26,7 +28,7 @@ CXXFLAGS :=
 
 
 build: ${OBJ_DIR} ${OBJ_DIRS} ${OUT_FOLDER} ${OUT_FILE}
-	echo haza
+	
 
 clean:
 	- rm -rf ${OUT_FOLDER}
@@ -51,3 +53,7 @@ ${OBJ_DIR}:
 
 ${OBJ_DIRS}:
 	mkdir $@	
+
+run: build
+	bin/identacoin.exe Server > serverOut.log &
+	bin/identacoin.exe Client > clientOut.log & 
