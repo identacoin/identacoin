@@ -25,19 +25,14 @@ OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 LDFLAGS := 
 CPPFLAGS := 
 CXXFLAGS := 
-
+LOGS := logs
 
 build: ${OBJ_DIR} ${OBJ_DIRS} ${OUT_FOLDER} ${OUT_FILE}
 	
-
 clean:
 	- rm -rf ${OUT_FOLDER}
 	- rm -rf ${OBJ_DIR}
-
-test:
-	echo ${OBJ_DIRS}
-	x=("$(/usr/bin/find ${SRC_DIR} -print)")
-	echo $x
+	- rm -rf ${LOGS}
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	g++ $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
@@ -54,6 +49,9 @@ ${OBJ_DIR}:
 ${OBJ_DIRS}:
 	mkdir $@	
 
-run: build
-	bin/identacoin.exe Server > serverOut.log &
-	bin/identacoin.exe Client > clientOut.log & 
+${LOGS}:
+	mkdir $@	
+
+run: ${LOGS} build
+	bin/identacoin.exe Server > ${LOGS}/serverOut.log &
+	bin/identacoin.exe Client > ${LOGS}/clientOut.log & 
