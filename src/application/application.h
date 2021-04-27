@@ -6,10 +6,10 @@ class Application : public ThreadBase {         // The class
     char **argv;            
 
   public:
-    Application(int argc, char *argv[]) : ThreadBase() {
+    Application(int argc, char **argv) : ThreadBase() {
       this->argc = argc;
       this->argv = argv;
     }
 
-    void run();
+    virtual void run();
 };

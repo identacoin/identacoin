@@ -1,7 +1,7 @@
 #include "threadbase.h"
 
 ThreadBase::ThreadBase() {
-
+    
 }
 
 void ThreadBase::join() {

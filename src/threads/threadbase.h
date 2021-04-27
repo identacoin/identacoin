@@ -10,7 +10,7 @@ class ThreadBase {         // The class
           // Access specifier
         ThreadBase();
         void start(); 
-        void run();        
+        virtual void run();        
         void join();
 
 };
