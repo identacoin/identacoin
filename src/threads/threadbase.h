@@ -1,4 +1,16 @@
+#include <iostream>
+#include <thread>
+
 class ThreadBase {         // The class
-  public:               // Access specifier
-    int run(int argc, char *argv[]);
+
+    private:
+        std::thread t;        
+
+    public:       
+          // Access specifier
+        ThreadBase();
+        void start(); 
+        void run();        
+        void join();
+
 };

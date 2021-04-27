@@ -1,12 +1,15 @@
-class Application {         // The class
-  public:   
+#include "../threads/threadbase.h"
+
+class Application : public ThreadBase {         // The class
+  private:   
     int argc; 
     char **argv;            
 
-    Application(int argc, char *argv[]) {
+  public:
+    Application(int argc, char *argv[]) : ThreadBase() {
       this->argc = argc;
       this->argv = argv;
     }
 
-    int run();
+    void run();
 };

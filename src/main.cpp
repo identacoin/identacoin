@@ -6,8 +6,12 @@
 
 int main(int argc, char *argv[]) {
 
-    Application a(argc, argv);
+    Application* a = new Application(argc, argv);
+    
+    a->start();
 
-    return a.run();
+    a->join();
+
+    return 0;
    
 }

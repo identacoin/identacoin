@@ -9,7 +9,7 @@
 std::string serverMode ("Server");
 std::string clientMode ("Client");
 
-int Application::run() {
+void Application::run() {
 
      /*
     
@@ -42,6 +42,6 @@ int Application::run() {
 
     }
 
-    return 0;
+    return;
 
 }
