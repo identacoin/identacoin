@@ -17,18 +17,13 @@
 
 #include "../threads/threadbase.h"
 
-class ServerSocket : public ThreadBase {         // The class
+class ServerConnection : public ThreadBase {         // The class
 
   private:
-    int server_fd;
-    struct sockaddr_in address;
-
-    void createSocket();
-    void setOptions();
-    void bindSocket();
-    void listenSocket();
+    int new_socket;
     
   public:               // Access specifier
-    int openStocket(void);
+    ServerConnection(int fd);
+    int handleRequest(void);
     virtual void run();
 };

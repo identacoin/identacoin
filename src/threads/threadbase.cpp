@@ -14,8 +14,9 @@ void ThreadBase::run() {
 
 void runThread(ThreadBase* me) {
     me->run();
+
 }
 
 void ThreadBase::start() {
-        t = std::thread(runThread, this);
-    }
+    t = std::thread(runThread, this);
+}

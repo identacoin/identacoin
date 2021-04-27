@@ -27,7 +27,9 @@ void Application::run() {
 
             ServerSocket* sock = new ServerSocket();
 
-            sock->openStocket();    
+            sock->start();    
+
+            sock->join();
 
         } else if (str1.compare(clientMode) == 0) {
             std::cout << clientMode << " Mode\n";

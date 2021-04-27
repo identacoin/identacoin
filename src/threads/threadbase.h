@@ -1,6 +1,9 @@
 #include <iostream>
 #include <thread>
 
+#ifndef __IC_THREAD_BASE
+#define __IC_THREAD_BASE
+
 class ThreadBase {         // The class
 
     private:
@@ -14,3 +17,5 @@ class ThreadBase {         // The class
         void join();
 
 };
+
+#endif
