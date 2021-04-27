@@ -15,6 +15,7 @@ class ThreadBase {         // The class
         void start(); 
         virtual void run();        
         void join();
+        void detach();
 
 };
 
