@@ -13,23 +13,11 @@
 
 int main(int argc, char *argv[]) {
 
-    
-        std::cout << "Super Test Mode\n";
-
-        Test* test = new Test();
-
-        test->runTest();
-
-    
-    std::cout << "caught";
-
-/*
     Application* a = new Application(argc, argv);
-    
+
     a->start();
 
     a->join();
-*/
 
     return 0;
    

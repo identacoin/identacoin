@@ -15,8 +15,9 @@ ifeq ($(uname_S), Windows)
 endif
 ifeq ($(uname_S), Linux)
     OUT_FILE=${OUT_FOLDER}/${BASENAME}
-	LIBS := -lcryptopp -pthread 
-	LDFLAGS := -static
+	LIBS := -lcryptopp -lpthread 
+	LDFLAGS := 
+	CPPFLAGSX := -pthread 
 endif
 
 SRC_DIR := src
@@ -28,7 +29,7 @@ BASE_VERSION_NUM := 0.1
 VERSION := ${BASE_VERSION_NUM}.$(shell git show --oneline -s --format="%h %d")
 BUILD_DATE := $(shell date "+%Y/%m/%d %H:%M:%S")
 LDEXT := 
-CPPFLAGS := -DBUILDDATE="\"${BUILD_DATE}\"" -DVERSION="\"${VERSION}\""
+CPPFLAGS := ${CPPFLAGSX} -DBUILDDATE="\"${BUILD_DATE}\"" -DVERSION="\"${VERSION}\""
 CXXFLAGS := 
 LOGS := logs
 

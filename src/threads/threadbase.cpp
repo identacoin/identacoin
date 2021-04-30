@@ -5,7 +5,9 @@ ThreadBase::ThreadBase() {
 }
 
 void ThreadBase::join() {
-    t.join();
+    if (t.joinable()) {
+        t.join();
+    }
 }
 
 void ThreadBase::detach() {
