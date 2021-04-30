@@ -10,11 +10,13 @@ BASENAME=identacoin
 
 ifeq ($(uname_S), Windows)
     OUT_FILE=${OUT_FOLDER}/${BASENAME}.exe
-	LIBS := -lws2_32 -lwsock32
+	LIBS := -lws2_32 -lwsock32 -lcryptopp -lssl
+	LDFLAGS := -static
 endif
 ifeq ($(uname_S), Linux)
     OUT_FILE=${OUT_FOLDER}/${BASENAME}
-	LIBS := 
+	LIBS := -lcryptopp -pthread 
+	LDFLAGS := -static
 endif
 
 SRC_DIR := src
@@ -22,7 +24,6 @@ OBJ_DIR := obj
 OBJ_DIRS := $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%, $(wildcard ${SRC_DIR}/*/)) 
 SRC_FILES := $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard ${SRC_DIR}/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
-LDFLAGS :=
 BASE_VERSION_NUM := 0.1
 VERSION := ${BASE_VERSION_NUM}.$(shell git show --oneline -s --format="%h %d")
 BUILD_DATE := $(shell date "+%Y/%m/%d %H:%M:%S")
@@ -59,3 +60,7 @@ ${LOGS}:
 run: ${LOGS} build
 	bin/identacoin.exe Server > ${LOGS}/serverOut.log &
 	bin/identacoin.exe Client > ${LOGS}/clientOut.log & 
+
+runTest: ${LOGS} build
+	bin/identacoin.exe Test
+	

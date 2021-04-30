@@ -4,6 +4,11 @@
 #include "../win32/w32socks.h"
 #include "serverconnection.h"
 
+#ifndef __WIN32__
+typedef int BOOL;
+#define TRUE 1
+#endif
+
 void ServerSocket::run() {
     this->openStocket();
 }
@@ -28,7 +33,9 @@ void ServerSocket::setOptions() {
                                                   
     if (result)    {
         std::cout << result << "\n"; 
+        #ifdef __WIN32__
         wprintf(L"setsockopt for SO_KEEPALIVE failed with error: %u\n", WSAGetLastError());
+        #endif
         perror("setsockopt");
         exit(EXIT_FAILURE);
     }

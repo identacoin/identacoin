@@ -14,6 +14,7 @@
 #define PORT 8080
 
 #include "clientsocket.h"
+#include "../win32/w32socks.h"
 
 int ClientSocket::connectSocket(void)
 {
@@ -22,16 +23,8 @@ int ClientSocket::connectSocket(void)
 	const char *hello = "Hello from client";
 	char buffer[1024] = {0};
 
-    WSADATA wsaData;
-    WORD wVersionRequested = MAKEWORD(2, 2);
-
-    int err = WSAStartup(wVersionRequested, &wsaData);
-    if (err != 0) {
-        /* Tell the user that we could not find a usable */
-        /* Winsock DLL.                                  */
-        printf("WSAStartup failed with error: %d\n", err);
-        return 1;
-    }
+    W32Socks w32;
+    w32.startUp();
 
 	if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{

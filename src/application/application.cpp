@@ -5,9 +5,11 @@
 
 #include "../networking/serversocket.h"
 #include "../networking/clientsocket.h"
+#include "../test/testmode.h"
 
 std::string serverMode ("Server");
 std::string clientMode ("Client");
+std::string testMode ("Test");
 
 void Application::run() {
 
@@ -37,6 +39,15 @@ void Application::run() {
             ClientSocket* client = new ClientSocket();
 
             client->connectSocket();
+
+        } else if (str1.compare(testMode) == 0) {
+
+            std::cout << testMode << " Mode\n";
+
+            Test* test = new Test();
+
+            test->runTest();
+
 
         } else {
             std::cout << "unsupported Mode\n";
