@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+#include "../util/random.h"
+
 void Test::runTest()
 {
 
@@ -37,5 +39,11 @@ void Test::runTest()
     recovered = value.setEncrypted(cipher);
 
     std::cout << "recovered text: " << recovered << std::endl;
+
+    RandNum randN(3);
+
+    std::cout << "random num: " << (randN.generate()) << std::endl;
+    std::cout << "random num: " << randN.generate() << std::endl;
+    std::cout << "random num: " << randN.generate() << std::endl;
  
 }
