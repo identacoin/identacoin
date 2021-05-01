@@ -1,80 +1,41 @@
 #include "testmode.h"
-
-#include "cryptopp/cryptlib.h"
-#include "cryptopp/rijndael.h"
-#include "cryptopp/modes.h"
-#include "cryptopp/files.h"
-#include "cryptopp/osrng.h"
-#include "cryptopp/hex.h"
-
+#include "../enc/ephemeralkey.h"
+#include "../enc/ephencvalue.h"
 #include <iostream>
 #include <string>
 
 void Test::runTest()
 {
 
-    using namespace CryptoPP;
+    EphemeralKey ephKey;
+    EphEncValue value(ephKey);
 
-    AutoSeededRandomPool prng;
-    HexEncoder encoder(new FileSink(std::cout));
-
-    SecByteBlock key(AES::DEFAULT_KEYLENGTH);
-    SecByteBlock iv(AES::BLOCKSIZE);
-
-    std::string s1("A16ByteString456");
-    SecByteBlock b1((const byte*)s1.data(), s1.size());
-
-    prng.GenerateBlock(key, key.size());
-    prng.GenerateBlock(iv, iv.size());
+    CryptoPP::HexEncoder encoder(new CryptoPP::FileSink(std::cout));
 
     std::string plain = "rock";
     std::string cipher, recovered;
 
-    std::cout << "plain text: " << plain << " : " << AES::DEFAULT_KEYLENGTH << std::endl;
+    std::cout << "plain text: " << plain << std::endl;
 
-    CBC_Mode<AES>::Encryption e;
-    e.SetKeyWithIV(b1, b1.size(), iv);
+    cipher = value.setPlain(plain);
 
-   
-    
-        
-       
+    std::cout << "key: ";
+    encoder.Put(ephKey.getKey(), ephKey.getKey().size());
+    encoder.MessageEnd();
+    std::cout << std::endl;
 
-        StringSource s(plain, true,
-                       new StreamTransformationFilter(e,
-                                                      new StringSink(cipher)) // StreamTransformationFilter
-        );                                                                    // StringSource        
+    std::cout << "iv: ";
+    encoder.Put(ephKey.getIV(), ephKey.getIV().size());
+    encoder.MessageEnd();
+    std::cout << std::endl;
 
-            
+    std::cout << "cipher text: ";
+    encoder.Put((const byte *)&cipher[0], cipher.size());
+    encoder.MessageEnd();
+    std::cout << std::endl;
 
-        std::cout << "key: ";
-        encoder.Put(b1, b1.size());
-        encoder.MessageEnd();
-        std::cout << std::endl;
+    recovered = value.setEncrypted(cipher);
 
-        std::cout << "iv: ";
-        encoder.Put(iv, iv.size());
-        encoder.MessageEnd();
-        std::cout << std::endl;
-
-        std::cout << "cipher text: ";
-        encoder.Put((const byte *)&cipher[0], cipher.size());
-        encoder.MessageEnd();
-        std::cout << std::endl;
-
-        CBC_Mode<AES>::Decryption d;
-        d.SetKeyWithIV(b1, b1.size(), iv);
-
-        StringSource s2(cipher, true,
-                       new StreamTransformationFilter(d,
-                                                      new StringSink(recovered)) // StreamTransformationFilter
-        );                                                                       // StringSource
-
-        std::cout << "recovered text: " << recovered << std::endl;
-    /*
-    catch (const Exception &e)
-    {
-        std::cerr << e.what() << std::endl;
-        exit(1);
-    }*/
+    std::cout << "recovered text: " << recovered << std::endl;
+ 
 }
